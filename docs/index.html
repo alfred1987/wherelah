@@ -42,8 +42,9 @@
               lng: position.coords.longitude
             };
 
-            console.log('My Pos: ' + pos);
-            
+            console.log('My lat: ' + lat);
+            console.log('My lng: ' + lng);
+
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             infoWindow.open(map);

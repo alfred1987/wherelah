@@ -135,7 +135,8 @@ jQuery(document).ready(function(){
 	var allBusStop = []
 	,nearestBusStop = []
 	,busArrival = []
-	,origin = [];
+	,origin = []
+	,lat,long;
 	
 	var proxy = 'https://cors-anywhere.herokuapp.com/';
 
@@ -163,21 +164,16 @@ jQuery(document).ready(function(){
 	});
 	*/
 
-	function getLocation() {
-	    if (navigator.geolocation) {
-	        navigator.geolocation.watchPosition(showPosition);
-	    } else { 
-	        alert('Geolocation is not supported by this browser.');
-	    }
+	if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+    } else { 
+        alert('Geolocation is not supported by this browser.');
     }
     
 	function showPosition(position) {
-		console.log('lat: ' + position.coords.latitude);
-		console.log('lng: ' + position.coords.longitude);
-		origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
+		lat = position.coords.latitude;
+		lng = position.coords.longitude;
 	}
-
-	getLocation();
 
 	$.ajax({
 		url: "allBusStop.json",
@@ -196,7 +192,8 @@ jQuery(document).ready(function(){
 
 	    for (var index in allBusStop) {
 
-	    	console.log('origin: ' + origin);
+	    	console.log('lat: ' + lat);
+	    	console.log('lng: ' + lng);
 
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};

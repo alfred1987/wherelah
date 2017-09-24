@@ -19,7 +19,7 @@ jQuery(document).ready(function(){
 
 	console.log('Ready ...');
 
-	var AccountKey 	= 'C5kfbXNQOv6r8ptLY5tZsQ=='
+	var accountKey 	= 'C5kfbXNQOv6r8ptLY5tZsQ=='
 		,busStopURL = 'https://datamall2.mytransport.sg/ltaodataservice/BusRoutes';
 
 
@@ -28,11 +28,10 @@ jQuery(document).ready(function(){
 	$.ajax({
         url: busStopURL,
         type: 'GET',
-        dataType: 'json',
         headers: {
-            'AccountKey': AccountKey
+            'accountkey': accountKey,
+            "accept": "application/json",
         },
-        contentType: 'application/json; charset=utf-8',
         success: function (result) {
            	console.log('result: ' + result);
         },

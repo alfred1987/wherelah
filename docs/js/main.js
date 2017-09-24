@@ -22,8 +22,8 @@ jQuery(document).ready(function(){
 	var allBusStop = [];
 	var nearestBusStop = [];
 	var busArrival = [];
-	var origin=[];
-
+	var origin = [];
+	
 	var proxy = 'https://cors-anywhere.herokuapp.com/';
 
 	var settings = {
@@ -58,46 +58,9 @@ jQuery(document).ready(function(){
 		});
 	}
 
-	function getLocation() {
-	    if (navigator.geolocation) {
-	        navigator.geolocation.watchPosition(showPosition);
-	    } else { 
-	        x.innerHTML = "Geolocation is not supported by this browser.";
-	    }
-    }
-    
-	function showPosition(position) {
-		console.log('lat: ' + position.coords.latitude);
-		console.log('lng: ' + position.coords.longitude);
-	}
-
-	function calculateDistance(p1, p2) {
-	    var erdRadius = 6371;
-
-	    var p1Longitude = p1.Longitude * (Math.PI / 180);
-	    var p1Latitude = p1.Latitude * (Math.PI / 180);
-	    var p2Longitude = p2.Longitude * (Math.PI / 180);
-	    var p2Latitude = p2.Latitude * (Math.PI / 180);
-
-	    var x0 = p1Longitude * erdRadius * Math.cos(p1Latitude);
-	    var y0 = p1Latitude * erdRadius;
-
-	    var x1 = p2Longitude * erdRadius * Math.cos(p2Latitude);
-	    var y1 = p2Latitude * erdRadius;
-
-	    var dx = x0 - x1;
-	    var dy = y0 - y1;
-
-	    return Math.sqrt((dx * dx) + (dy * dy));
-	}
-
-	array.sort(function (a, b) {
-	    return a.Distance - b.Distance;
-	});
-
 	function getNearestBusStop(allBusStop) {
-	    var array = [];
-	    
+		var array = [];
+
 	    for (var index in allBusStop) {
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
@@ -143,6 +106,20 @@ jQuery(document).ready(function(){
 		
 		return nearestBusStop;
 	}
+
+	function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.watchPosition(showPosition);
+	    } else { 
+	        x.innerHTML = "Geolocation is not supported by this browser.";
+	    }
+    }
+    
+	function showPosition(position) {
+		console.log('lat: ' + position.coords.latitude);
+		console.log('lng: ' + position.coords.longitude);
+	}
+
 
 	function displayHTMLContent() {
 		var busArrivalForDisplay = [];

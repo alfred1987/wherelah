@@ -54,19 +54,22 @@ jQuery(document).ready(function(){
 			dataType: "json",
 			success: function (data) {
 				allBusStop = data.value;
+				return allBusStop;
 			}
 		});
 	}
 
-	function getNearestBusStop(allBusStop) {
+	function getNearestBusStop() {
 		var array = []
 			,BusStopCode = []
 			,Distance = []
 			,RoadName = []
 			,Description = [];
 
+		allBusStop = getAllBusStop();
+
 		console.log(allBusStop);
-		
+
 	    for (var index in allBusStop) {
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};

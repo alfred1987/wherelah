@@ -19,10 +19,12 @@ jQuery(document).ready(function(){
 
 	console.log('Ready ...');
 
+	var proxy = 'https://cors-anywhere.herokuapp.com/';
+
 	var settings = {
 		"async": true,
 		"crossDomain": true,
-		"url": "//datamall2.mytransport.sg/ltaodataservice/BusStops",
+		"url": proxy + "http://datamall2.mytransport.sg/ltaodataservice/BusStops",
 		"method": "GET",
 		"headers": {
 			"accountkey": "0TAM+9H4RM6aH0P6Dg9jnA==",

@@ -34,14 +34,52 @@ jQuery(document).ready(function(){
 	}
 
 	$.ajax(settings).done(function (response) {
-		console.log(response);
-		$('.data').html(response);
+		//console.log(response.value);
+		
+		$('.data > table').html('');
+
+		$.each(response.value, function( index, value ) {
+		    
+		  $('.data > table').append(
+		  	'<tr><td>' + 'BusStopCode: ' + value.BusStopCode + '<br />RoadName: ' + value.RoadName + '<br />Description: ' + value.Description + '<br />Latitude: ' + value.Latitude + '<br />Longitude: ' + value.Longitude + '</td></tr>'
+		  );
+
+
+		});
+
+
+
+
 	});
 
+	function getAllBusStop(){
+		$.ajax({
+			url: "allBusStop.json",
+			dataType: "json",
+			success: function (data) {
+				console.log(data);
+			}
+		});
+	}
 
 
+	function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.watchPosition(showPosition);
+	    } else { 
+	        x.innerHTML = "Geolocation is not supported by this browser.";
+	    }
+    }
+    
+    
 
+	function showPosition(position) {
+		console.log('lat: ' + position.coords.latitude);
+		console.log('lng: ' + position.coords.longitude);
+	}
 
+	getLocation();
+	//getAllBusStop();
 
 
 

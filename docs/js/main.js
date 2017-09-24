@@ -163,99 +163,110 @@ jQuery(document).ready(function(){
 	});
 	*/
 
+	function getGeolocation() {
+		var options = {
+			enableHighAccuracy: true,
+			timeout: 5000,
+			maximumAge: 0
+		};
+
+		function success(pos) {
+			var crd = pos.coords;
+			origin = {"Longitude":crd.longitude,"Latitude":crd.latitude};
+		};
+
+		function error(err) {
+			alert('geolocation not received');
+		};
+
+		navigator.geolocation.getCurrentPosition(success, error, options);
+	};
+
 	$.ajax({
 		url: "allBusStop.json",
 		dataType: "json",
 		success: function (data) {
+			getGeolocation();
 			getNearestBusStop(data.value);
 		}
 	});
 
 	function getNearestBusStop(allBusStop) {
+		
 		var array = []
 			,BusStopCode = []
 			,Distance = []
 			,RoadName = []
 			,Description = [];
 
-		if (navigator.geolocation) {
-	        navigator.geolocation.watchPosition(showPosition);
-	    } else { 
-	    	alert('Geolocation is not supported by this browser.');
-	    }
+	    for (var index in allBusStop) {
+		    var busStopCode = allBusStop[index].BusStopCode;
+			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
+		 	var distance = calculateDistance(origin, databaseBusStop)
+		    array.push({
+		        BusStopCode: busStopCode,
+		        Distance: distance,
+				RoadName: allBusStop[index].RoadName,
+				Description: allBusStop[index].Description,
+		    });
+		}
 
-	    function showPosition(position) {
-	    	origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
+		function calculateDistance(p1, p2) {
+		    var erdRadius = 6371;
 
-	    	for (var index in allBusStop) {
-			    var busStopCode = allBusStop[index].BusStopCode;
-				var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
-			 	var distance = calculateDistance(origin, databaseBusStop)
-			    array.push({
-			        BusStopCode: busStopCode,
-			        Distance: distance,
-					RoadName: allBusStop[index].RoadName,
-					Description: allBusStop[index].Description,
-			    });
+		    var p1Longitude = p1.Longitude * (Math.PI / 180);
+		    var p1Latitude = p1.Latitude * (Math.PI / 180);
+		    var p2Longitude = p2.Longitude * (Math.PI / 180);
+		    var p2Latitude = p2.Latitude * (Math.PI / 180);
+
+		    var x0 = p1Longitude * erdRadius * Math.cos(p1Latitude);
+		    var y0 = p1Latitude * erdRadius;
+
+		    var x1 = p2Longitude * erdRadius * Math.cos(p2Latitude);
+		    var y1 = p2Latitude * erdRadius;
+
+		    var dx = x0 - x1;
+		    var dy = y0 - y1;
+
+		    return Math.sqrt((dx * dx) + (dy * dy));
+		}
+
+		array.sort(function (a, b) {
+		    return a.Distance - b.Distance;
+		});
+
+		for (var i = 0; i < 20; i++){
+			//collect bus stop number within 0.3 meter
+			if( array[i].Distance >= 0.3 || i>5 ){
+				break;
 			}
 
-			function calculateDistance(p1, p2) {
-			    var erdRadius = 6371;
+			nearestBusStop.push(array[i]);
+		};
 
-			    var p1Longitude = p1.Longitude * (Math.PI / 180);
-			    var p1Latitude = p1.Latitude * (Math.PI / 180);
-			    var p2Longitude = p2.Longitude * (Math.PI / 180);
-			    var p2Latitude = p2.Latitude * (Math.PI / 180);
+		$('.data').html('');
 
-			    var x0 = p1Longitude * erdRadius * Math.cos(p1Latitude);
-			    var y0 = p1Latitude * erdRadius;
-
-			    var x1 = p2Longitude * erdRadius * Math.cos(p2Latitude);
-			    var y1 = p2Latitude * erdRadius;
-
-			    var dx = x0 - x1;
-			    var dy = y0 - y1;
-
-			    return Math.sqrt((dx * dx) + (dy * dy));
+		$.each(nearestBusStop, function( index, value ) {			
+			var settings = {
+				"async": true,
+				"crossDomain": true,
+				"url": proxy + "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode=" + value.BusStopCode,
+				"method": "GET",
+				"headers": {
+					"accountkey": "0TAM+9H4RM6aH0P6Dg9jnA==",
+					"accept": "application/json",
+					"cache-control": "no-cache"
+				}
 			}
 
-			array.sort(function (a, b) {
-			    return a.Distance - b.Distance;
+			$.ajax(settings).done(function (response) {
+				var busTime = response.Services[0].NextBus.EstimatedArrival;
+
+				$('.data').append(
+					'<table cellspacing="0" cellspacing="0" border="0" align="center"><tr><td colspan="2">Bus Stop: ' + response.BusStopCode + '</td></tr><tr><td colspan="2">Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '<br />Distance: ' + value.Distance + '</td></tr><tr><td>' + dateFormat(new Date(busTime), "mm/dd/yy, h:MM:ss TT") + '</td><td>' + timeToMinute(busTime) + ' Mins </td></tr></table>'
+				);
 			});
-
-			for (var i = 0; i < 20; i++){
-				//collect bus stop number within 0.3 meter
-				if( array[i].Distance >= 0.3 || i>5 ){
-					break;
-				}
-
-				nearestBusStop.push(array[i]);
-			};
-
-			$('.data').html('');
-
-			$.each(nearestBusStop, function( index, value ) {			
-				var settings = {
-					"async": true,
-					"crossDomain": true,
-					"url": proxy + "http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode=" + value.BusStopCode,
-					"method": "GET",
-					"headers": {
-						"accountkey": "0TAM+9H4RM6aH0P6Dg9jnA==",
-						"accept": "application/json",
-						"cache-control": "no-cache"
-					}
-				}
-
-				$.ajax(settings).done(function (response) {
-					var busTime = response.Services[0].NextBus.EstimatedArrival;
-
-					$('.data').append(
-						'<table cellspacing="0" cellspacing="0" border="0" align="center"><tr><td colspan="2">Bus Stop: ' + response.BusStopCode + '</td></tr><tr><td colspan="2">Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '<br />Distance: ' + value.Distance + '</td></tr><tr><td>' + dateFormat(new Date(busTime), "mm/dd/yy, h:MM:ss TT") + '</td><td>' + timeToMinute(busTime) + ' Mins </td></tr></table>'
-					);
-				});
-			});
-		}	    
+		});
 	}
 
 	function timeToMinute(arriveTime) {

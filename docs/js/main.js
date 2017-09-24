@@ -163,27 +163,22 @@ jQuery(document).ready(function(){
 	});
 	*/
 
-	function getGeolocation() {
-		var options = {
-			enableHighAccuracy: true,
-			timeout: 5000,
-			maximumAge: 0
-		};
+	function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.watchPosition(showPosition);
+	    } else { 
+	        alert('Geolocation is not supported by this browser.');
+	    }
+    }
+    
+	function showPosition(position) {
+		console.log('lat: ' + position.coords.latitude);
+		console.log('lng: ' + position.coords.longitude);
+		origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
+	}
 
-		function success(pos) {
-			var crd = pos.coords;
-			origin = {"Longitude":crd.longitude,"Latitude":crd.latitude};
-		};
+	getLocation();
 
-		function error(err) {
-			alert('geolocation not received');
-		};
-
-		navigator.geolocation.getCurrentPosition(success, error, options);
-	};
-
-	getGeolocation();
-	
 	$.ajax({
 		url: "allBusStop.json",
 		dataType: "json",
@@ -193,7 +188,6 @@ jQuery(document).ready(function(){
 	});
 
 	function getNearestBusStop(allBusStop) {
-		
 		var array = []
 			,BusStopCode = []
 			,Distance = []
@@ -201,6 +195,9 @@ jQuery(document).ready(function(){
 			,Description = [];
 
 	    for (var index in allBusStop) {
+
+	    	console.log('origin: ' + origin);
+
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
 		 	var distance = calculateDistance(origin, databaseBusStop)

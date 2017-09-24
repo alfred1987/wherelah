@@ -65,6 +65,8 @@ jQuery(document).ready(function(){
 			,RoadName = []
 			,Description = [];
 
+		console.log(allBusStop);
+		
 	    for (var index in allBusStop) {
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
@@ -102,7 +104,7 @@ jQuery(document).ready(function(){
 		});
 
 		console.log(array);
-		
+
 		/*
 		for (var i = 0; i < 20; i++){
 			//collect bus stop number within 0.3meter

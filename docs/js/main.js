@@ -135,8 +135,10 @@ jQuery(document).ready(function(){
 	var allBusStop = []
 	,nearestBusStop = []
 	,busArrival = []
-	,origin = []
-	,lat,long;
+	,origin = [],
+
+	var lat = '';
+	var lng = '';
 	
 	var proxy = 'https://cors-anywhere.herokuapp.com/';
 

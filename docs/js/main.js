@@ -187,10 +187,12 @@ jQuery(document).ready(function(){
 	    }
 
 	    function showPosition(position) {
+	    	console.log(position.coords.longitude);
+	    	console.log(position.coords.latitude);
 	    	latlng.push(position.coords.longitude, position.coords.latitude);
 		}
 
-		console.log(latlng);
+		//console.log(latlng);
 		
 		//origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
 

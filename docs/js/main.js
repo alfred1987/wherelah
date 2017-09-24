@@ -24,7 +24,7 @@ jQuery(document).ready(function(){
 
 
 
-
+	/*
 	$.ajax({
         url: busStopURL,
         type: 'GET',
@@ -39,7 +39,18 @@ jQuery(document).ready(function(){
         	console.log('error: ' + error);   
         }
     });
+	*/
 
+
+	var param = {
+		"method": "GET",
+		"headers": {
+		"accountkey": accountKey,
+		"accept": "application/json",
+		}
+	};
+
+	fetch(busStopURL,param).then((data) => data.json()).then(function(data){ console.log(data); });
 
 
 

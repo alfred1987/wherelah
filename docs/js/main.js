@@ -57,7 +57,7 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	console.log(allBusStop);
+	//console.log(allBusStop);
 
 	function getNearestBusStop(allBusStop) {
 		var array = []
@@ -172,5 +172,5 @@ jQuery(document).ready(function(){
 	  	return ((minutes < 0) ? 0 : minutes);;
 	}
 
-	
+	console.log(getLocation());
 });

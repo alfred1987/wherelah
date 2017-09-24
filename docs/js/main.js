@@ -48,27 +48,22 @@ jQuery(document).ready(function(){
 		});
 	});
 
-	function getAllBusStop() {
-		$.ajax({
-			url: "allBusStop.json",
-			dataType: "json",
-			success: function (data) {
-				allBusStop = data.value;
-				return allBusStop;
-			}
-		});
-	}
+	$.ajax({
+		url: "allBusStop.json",
+		dataType: "json",
+		success: function (data) {
+			allBusStop = data.value;
+		}
+	});
 
-	function getNearestBusStop() {
+	console.log(allBusStop);
+
+	function getNearestBusStop(allBusStop) {
 		var array = []
 			,BusStopCode = []
 			,Distance = []
 			,RoadName = []
 			,Description = [];
-
-		allBusStop = getAllBusStop();
-
-		console.log(allBusStop);
 
 	    for (var index in allBusStop) {
 		    var busStopCode = allBusStop[index].BusStopCode;
@@ -176,5 +171,5 @@ jQuery(document).ready(function(){
 	  	return ((minutes < 0) ? 0 : minutes);;
 	}
 
-	console.log(getNearestBusStop(allBusStop));
+	
 });

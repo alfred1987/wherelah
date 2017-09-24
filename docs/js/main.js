@@ -181,15 +181,10 @@ jQuery(document).ready(function(){
 			,lat,lng;
 
 		if (navigator.geolocation) {
-	        navigator.geolocation.watchPosition(showPosition);
+	        origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
 	    } else { 
 	    	alert('Geolocation is not supported by this browser.');
 	    }
-
-	    function showPosition(position) {
-	    	origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
-	    	return origin;
-		}
 
 		console.log(origin);
 

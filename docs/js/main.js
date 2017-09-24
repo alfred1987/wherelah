@@ -19,10 +19,10 @@ jQuery(document).ready(function(){
 
 	console.log('Ready ...');
 
-	var allBusStop = [];
-	var nearestBusStop = [];
-	var busArrival = [];
-	var origin = [];
+	var allBusStop = []
+	,nearestBusStop = []
+	,busArrival = []
+	,origin = [];
 	
 	var proxy = 'https://cors-anywhere.herokuapp.com/';
 
@@ -59,12 +59,15 @@ jQuery(document).ready(function(){
 	}
 
 	function getNearestBusStop(allBusStop) {
-		var array = [];
+		var array = []
+			,busStopCode
+			,databaseBusStop
+			,distance;
 
 	    for (var index in allBusStop) {
-		    var busStopCode = allBusStop[index].BusStopCode;
-			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
-		 	var distance = calculateDistance(origin, databaseBusStop)
+		    busStopCode = allBusStop[index].BusStopCode;
+			databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
+		 	distance = calculateDistance(origin, databaseBusStop)
 		    array.push({
 		        BusStopCode: busStopCode,
 		        Distance: distance,

@@ -178,15 +178,21 @@ jQuery(document).ready(function(){
 			,Distance = []
 			,RoadName = []
 			,Description = []
-			,lat,lng;
+			,latlng = [];
 
 		if (navigator.geolocation) {
-	        origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
+	        navigator.geolocation.watchPosition(showPosition);
 	    } else { 
 	    	alert('Geolocation is not supported by this browser.');
 	    }
 
-		console.log(origin);
+	    function showPosition(position) {
+	    	latlng.push(position.coords.longitude, position.coords.latitude);
+		}
+
+		console.log(latlng);
+		
+		//origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
 
 	    for (var index in allBusStop) {
 		    var busStopCode = allBusStop[index].BusStopCode;

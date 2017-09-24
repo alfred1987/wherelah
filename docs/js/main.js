@@ -163,6 +163,7 @@ jQuery(document).ready(function(){
 	});
 	*/
 
+	/*
 	if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
         console.log('1: ' + navigator.geolocation.watchPosition(showPosition));
@@ -174,6 +175,7 @@ jQuery(document).ready(function(){
 		origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
 		return origin;
 	}
+	*/
 
 	$.ajax({
 		url: "allBusStop.json",
@@ -191,12 +193,12 @@ jQuery(document).ready(function(){
 			,Description = [];
 
 	    for (var index in allBusStop) {
-
-	    	console.log('2: ' + navigator.geolocation.watchPosition(showPosition));
+	    	//console.log('2: ' + navigator.geolocation.watchPosition(showPosition));
+	    	origin = {"Longitude":103.943726,"Latitude":1.318929};
 
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
-		 	var distance = calculateDistance(navigator.geolocation.watchPosition(showPosition), databaseBusStop)
+		 	var distance = calculateDistance(origin, databaseBusStop)
 		    array.push({
 		        BusStopCode: busStopCode,
 		        Distance: distance,

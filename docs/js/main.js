@@ -52,6 +52,7 @@ jQuery(document).ready(function(){
 		url: "allBusStop.json",
 		dataType: "json",
 		success: function (data) {
+			console.log(data.value);
 			allBusStop.push(data.value);
 		}
 	});

@@ -136,9 +136,6 @@ jQuery(document).ready(function(){
 	,nearestBusStop = []
 	,busArrival = []
 	,origin = [];
-
-	var lat = '';
-	var lng = '';
 	
 	var proxy = 'https://cors-anywhere.herokuapp.com/';
 
@@ -168,13 +165,14 @@ jQuery(document).ready(function(){
 
 	if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
+        console.log('1: ' + navigator.geolocation.watchPosition(showPosition));
     } else { 
         alert('Geolocation is not supported by this browser.');
     }
     
 	function showPosition(position) {
-		lat = position.coords.latitude;
-		lng = position.coords.longitude;
+		origin = {"Longitude":position.coords.longitude,"Latitude":position.coords.latitude};
+		return origin;
 	}
 
 	$.ajax({
@@ -194,12 +192,11 @@ jQuery(document).ready(function(){
 
 	    for (var index in allBusStop) {
 
-	    	console.log('lat: ' + lat);
-	    	console.log('lng: ' + lng);
+	    	console.log('2: ' + navigator.geolocation.watchPosition(showPosition));
 
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
-		 	var distance = calculateDistance(origin, databaseBusStop)
+		 	var distance = calculateDistance(navigator.geolocation.watchPosition(showPosition), databaseBusStop)
 		    array.push({
 		        BusStopCode: busStopCode,
 		        Distance: distance,

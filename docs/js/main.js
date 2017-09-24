@@ -60,14 +60,15 @@ jQuery(document).ready(function(){
 
 	function getNearestBusStop(allBusStop) {
 		var array = []
-			,busStopCode
-			,databaseBusStop
-			,distance;
-
+			,BusStopCode = []
+			,Distance = []
+			,RoadName = []
+			,Description = [];
+			
 	    for (var index in allBusStop) {
-		    busStopCode = allBusStop[index].BusStopCode;
-			databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
-		 	distance = calculateDistance(origin, databaseBusStop)
+		    var busStopCode = allBusStop[index].BusStopCode;
+			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
+		 	var distance = calculateDistance(origin, databaseBusStop)
 		    array.push({
 		        BusStopCode: busStopCode,
 		        Distance: distance,

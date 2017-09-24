@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
 	var settings = {
 		"async": true,
 		"crossDomain": true,
-		"url": "http://datamall2.mytransport.sg/ltaodataservice/BusStops",
+		"url": "//datamall2.mytransport.sg/ltaodataservice/BusStops",
 		"method": "GET",
 		"headers": {
 			"accountkey": "0TAM+9H4RM6aH0P6Dg9jnA==",

@@ -20,7 +20,7 @@ jQuery(document).ready(function(){
 	console.log('Ready ...');
 
 	var AccountKey 	= 'C5kfbXNQOv6r8ptLY5tZsQ=='
-		,busStopURL = 'http://datamall2.mytransport.sg/ltaodataservice/BusRoutes';
+		,busStopURL = 'https://datamall2.mytransport.sg/ltaodataservice/BusRoutes';
 
 
 

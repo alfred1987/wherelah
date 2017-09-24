@@ -182,11 +182,12 @@ jQuery(document).ready(function(){
 		navigator.geolocation.getCurrentPosition(success, error, options);
 	};
 
+	getGeolocation();
+	
 	$.ajax({
 		url: "allBusStop.json",
 		dataType: "json",
 		success: function (data) {
-			getGeolocation();
 			getNearestBusStop(data.value);
 		}
 	});

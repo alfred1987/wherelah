@@ -64,7 +64,7 @@ jQuery(document).ready(function(){
 			,Distance = []
 			,RoadName = []
 			,Description = [];
-			
+
 	    for (var index in allBusStop) {
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
@@ -101,7 +101,9 @@ jQuery(document).ready(function(){
 		    return a.Distance - b.Distance;
 		});
 
-
+		console.log(array);
+		
+		/*
 		for (var i = 0; i < 20; i++){
 			//collect bus stop number within 0.3meter
 			if(array[i].Distance >= 0.3 || i>5){break;}
@@ -109,6 +111,7 @@ jQuery(document).ready(function(){
 		};
 		
 		return nearestBusStop;
+		*/
 	}
 
 	function getLocation() {

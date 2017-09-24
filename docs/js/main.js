@@ -186,16 +186,15 @@ jQuery(document).ready(function(){
 	});
 
 	function getNearestBusStop(allBusStop) {
+		origin = {"Longitude":103.943726,"Latitude":1.318929};
+
 		var array = []
 			,BusStopCode = []
 			,Distance = []
 			,RoadName = []
 			,Description = [];
 
-	    for (var index in allBusStop) {
-	    	//console.log('2: ' + navigator.geolocation.watchPosition(showPosition));
-	    	origin = {"Longitude":103.943726,"Latitude":1.318929};
-
+	    for (var index in allBusStop) {   	
 		    var busStopCode = allBusStop[index].BusStopCode;
 			var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
 		 	var distance = calculateDistance(origin, databaseBusStop)

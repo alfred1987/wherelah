@@ -135,7 +135,7 @@ jQuery(document).ready(function(){
 	var allBusStop = []
 	,nearestBusStop = []
 	,busArrival = []
-	,origin = [],
+	,origin = [];
 
 	var lat = '';
 	var lng = '';

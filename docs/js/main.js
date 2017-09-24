@@ -19,38 +19,21 @@ jQuery(document).ready(function(){
 
 	console.log('Ready ...');
 
-	var accountKey 	= 'C5kfbXNQOv6r8ptLY5tZsQ=='
-		,busStopURL = 'https://datamall2.mytransport.sg/ltaodataservice/BusRoutes';
-
-
-
-	/*
-	$.ajax({
-        url: busStopURL,
-        type: 'GET',
-        headers: {
-            'AccountKey': accountKey,
-            'accept' 	: "application/json",
-        },
-        success: function (result) {
-           	console.log('result: ' + result);
-        },
-        error: function (error) {
-        	console.log('error: ' + error);   
-        }
-    });
-	*/
-
-
-	var param = {
+	var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": "http://datamall2.mytransport.sg/ltaodataservice/BusStops",
 		"method": "GET",
 		"headers": {
-		"accountkey": accountKey,
-		"accept": "application/json",
+			"accountkey": "0TAM+9H4RM6aH0P6Dg9jnA==",
+			"accept": "application/json",
+			"cache-control": "no-cache"
 		}
-	};
+	}
 
-	fetch(busStopURL,param).then((data) => data.json()).then(function(data){ console.log(data); });
+	$.ajax(settings).done(function (response) {
+		console.log(response);
+	});
 
 
 

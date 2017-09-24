@@ -29,8 +29,8 @@ jQuery(document).ready(function(){
         url: busStopURL,
         type: 'GET',
         headers: {
-            'accountkey': accountKey,
-            "accept": "application/json",
+            'AccountKey': accountKey,
+            'accept' 	: "application/json",
         },
         success: function (result) {
            	console.log('result: ' + result);

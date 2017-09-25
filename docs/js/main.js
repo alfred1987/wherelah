@@ -202,7 +202,6 @@ jQuery(document).ready(function(){
 		function success(pos) {
 		  	var crd = pos.coords;
 		  	origin = {"Longitude":crd.longitude,"Latitude":crd.latitude};
-			console.log('origin: ' + origin);
 
 			for (var index in allBusStop) {   	
 			    var busStopCode = allBusStop[index].BusStopCode;
@@ -265,6 +264,7 @@ jQuery(document).ready(function(){
 				}
 
 				$.ajax(settings).done(function (response) {
+					console.log(response);
 					var busTime = response.Services[0].NextBus.EstimatedArrival;
 
 					$('.data').append(

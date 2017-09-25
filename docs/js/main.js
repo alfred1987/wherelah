@@ -186,6 +186,17 @@ jQuery(document).ready(function(){
 	});
 
 	function getNearestBusStop(allBusStop) {
+		
+
+		//origin = {"Longitude":103.943726,"Latitude":1.318929};
+
+		var array = []
+			,BusStopCode = []
+			,Distance = []
+			,RoadName = []
+			,Description = []
+			,crd;
+
 		var options = {
 		  enableHighAccuracy: true,
 		  timeout: 5000,
@@ -193,7 +204,7 @@ jQuery(document).ready(function(){
 		};
 
 		function success(pos) {
-		  var crd = pos.coords;
+		  crd = pos.coords;
 		  //alert(crd.latitude + " " + crd.longitude);
 		};
 
@@ -205,13 +216,9 @@ jQuery(document).ready(function(){
 
 		console.log(crd);
 
-		//origin = {"Longitude":103.943726,"Latitude":1.318929};
 
-		var array = []
-			,BusStopCode = []
-			,Distance = []
-			,RoadName = []
-			,Description = [];
+
+
 
 	    for (var index in allBusStop) {   	
 		    var busStopCode = allBusStop[index].BusStopCode;

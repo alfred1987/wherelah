@@ -264,12 +264,19 @@ jQuery(document).ready(function(){
 				}
 
 				$.ajax(settings).done(function (response) {
-					console.log(response);
-					var busTime = response.Services[0].NextBus.EstimatedArrival;
-
+					//console.log(response);
+					//var busTime = response.Services[0].NextBus.EstimatedArrival;
+					/*
 					$('.data').append(
 						'<table cellspacing="0" cellspacing="0" border="0" align="center"><tr><td colspan="2">Bus Stop: ' + response.BusStopCode + '</td></tr><tr><td colspan="2">Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '<br />Distance: ' + value.Distance + '</td></tr><tr><td>' + dateFormat(new Date(busTime), "mm/dd/yy, h:MM:ss TT") + '</td><td>' + timeToMinute(busTime) + ' Mins </td></tr></table>'
 					);
+					*/
+
+					$('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
+
+					$.each(response.Services, function( i, v ) {
+						$('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
+					});
 				});
 			});
 		};

@@ -319,7 +319,10 @@ function displayMarkers(){
    var bounds = new google.maps.LatLngBounds();
    
    // for loop traverses markersData array calling createMarker function for each marker 
-   for (var i = 0; i < markersData.length; i++){
+   for (var i = 0; i < markersData.length; i++) {
+
+      console.log(markersData[i].lat);
+      console.log(markersData[i].lng);
 
       var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
       var name = markersData[i].name;

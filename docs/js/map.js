@@ -299,7 +299,7 @@ function displayMarkers(){
    // this variable sets the map bounds according to markers position
    var bounds = new google.maps.LatLngBounds();
    
-   console.log(markersData);
+   console.log(markersData[0]);
 
    // for loop traverses markersData array calling createMarker function for each marker 
    for (var i = 0; i < markersData.length; i++) {
@@ -337,6 +337,7 @@ function createMarker(latlng, name, address1, address2, postalCode){
    // and the Info Window is opened.
    google.maps.event.addListener(marker, 'click', function() {
       
+      /*
       // Creating the content to be inserted in the infowindow
       var iwContent = '<div id="iw_container">' +
             '<div class="iw_title">' + name + '</div>' +
@@ -349,6 +350,8 @@ function createMarker(latlng, name, address1, address2, postalCode){
 
       // opening the Info Window in the current map and at the current marker location.
       infoWindow.open(map, marker);
+      */
+
    });
 }
 

@@ -268,8 +268,8 @@ function getNearestBusStop(allBusStop) {
               {
                   lat: v.NextBus.Latitude,
                   lng: v.NextBus.Longitude,
-                  name: "Camping Praia da Barra",
-                  address1:"Rua Diogo Cão, 125",
+                  name: v.ServiceNo,
+                  address1: response.BusStopCode,
                   address2: "Praia da Barra",
                   postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
                }

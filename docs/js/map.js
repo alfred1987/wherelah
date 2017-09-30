@@ -363,7 +363,7 @@ $.ajax({
    success: function (data) {
       console.log('we are there ....');
       getNearestBusStop(data.value);
-      console.log('marker: ' + markersData);
+      console.log(markersData[0]);
       google.maps.event.addDomListener(window, 'load', initialize);
    }
 });

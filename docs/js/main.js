@@ -284,6 +284,7 @@ jQuery(document).ready(function(){
 	  	return ((minutes < 0) ? 0 : minutes);;
 	}
 
+	/*
 	function initMap() {
 		var map = new google.maps.Map(document.getElementById('map'), {
 		  zoom: 8,
@@ -319,4 +320,5 @@ jQuery(document).ready(function(){
 		  }
 		});
 	}
+	*/
 });

@@ -176,16 +176,6 @@ var markersData = [
 
 var proxy = 'https://cors-anywhere.herokuapp.com/';
 
-$.ajax({
-   url: "allBusStop.json",
-   dataType: "json",
-   success: function (data) {
-      console.log('we are there ....');
-      getNearestBusStop(data.value);
-      console.log(markersData);
-   }
-});
-
 function getNearestBusStop(allBusStop) {
 
    var array = []
@@ -265,14 +255,14 @@ function getNearestBusStop(allBusStop) {
          $.each(response.Services, function( i, v ) {
 
             markersData.push(
-              {
-                  lat: v.NextBus.Latitude,
-                  lng: v.NextBus.Longitude,
-                  name: v.ServiceNo,
-                  address1: response.BusStopCode,
-                  address2: "Praia da Barra",
-                  postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
-               }
+              [
+                lat: v.NextBus.Latitude,
+                lng: v.NextBus.Longitude,
+                name: v.ServiceNo,
+                address1: response.BusStopCode,
+                address2: "Praia da Barra",
+                postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
+              ]
             );
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
@@ -308,8 +298,6 @@ function initialize() {
    // Finally displayMarkers() function is called to begin the markers creation
    displayMarkers();
 }
-google.maps.event.addDomListener(window, 'load', initialize);
-
 
 // This function will iterate over markersData array
 // creating markers with createMarker function
@@ -321,8 +309,8 @@ function displayMarkers(){
    // for loop traverses markersData array calling createMarker function for each marker 
    for (var i = 0; i < markersData.length; i++) {
 
-      console.log(markersData[i].lat);
-      console.log(markersData[i].lng);
+      console.log('lat: ' + markersData[i].lat);
+      console.log('lng: ' + markersData[i].lng);
 
       var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
       var name = markersData[i].name;
@@ -368,3 +356,14 @@ function createMarker(latlng, name, address1, address2, postalCode){
       infoWindow.open(map, marker);
    });
 }
+
+$.ajax({
+   url: "allBusStop.json",
+   dataType: "json",
+   success: function (data) {
+      console.log('we are there ....');
+      getNearestBusStop(data.value);
+      console.log(markersData);
+      google.maps.event.addDomListener(window, 'load', initialize);
+   }
+});

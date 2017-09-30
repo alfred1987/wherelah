@@ -299,7 +299,7 @@ function displayMarkers(){
    // this variable sets the map bounds according to markers position
    var bounds = new google.maps.LatLngBounds();
    
-   console.log(markersData[0]);
+   console.log(markersData[][0]);
 
    // for loop traverses markersData array calling createMarker function for each marker 
    for (var i = 0; i < markersData.length; i++) {

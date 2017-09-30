@@ -250,7 +250,7 @@ function timeToMinute(arriveTime) {
 }
 
 // markersData variable stores the information necessary to each marker
-var markersData = [
+markersData = [
    {
       lat: 40.6386333,
       lng: -8.745,

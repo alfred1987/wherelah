@@ -277,6 +277,8 @@ markersData = [
 ];
 */
 
+console.log(markersData);
+
 function initialize() {
    var mapOptions = {
       center: new google.maps.LatLng(40.601203,-8.668173),

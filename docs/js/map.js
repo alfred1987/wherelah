@@ -302,7 +302,7 @@ function initialize() {
 // This function will iterate over markersData array
 // creating markers with createMarker function
 function displayMarkers(){
-
+  console.log('hello');
    // this variable sets the map bounds according to markers position
    var bounds = new google.maps.LatLngBounds();
    
@@ -363,7 +363,7 @@ $.ajax({
    success: function (data) {
       console.log('we are there ....');
       getNearestBusStop(data.value);
-      console.log(markersData);
+      console.log('marker: ' + markersData);
       google.maps.event.addDomListener(window, 'load', initialize);
    }
 });

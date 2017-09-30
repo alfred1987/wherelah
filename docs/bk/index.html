@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	
+	<title>WHERE-LAH</title>
+</head>
+<body>
+<header>
+	<!--
+	<nav class="cd-stretchy-nav add-content">
+		<a class="cd-nav-trigger" href="#0">
+			Menu
+			<span aria-hidden="true"></span>
+		</a>
+
+		<ul>
+			<li><a href="#0"><span>Image</span></a></li>
+			<li><a href="#0"><span>Audio</span></a></li>
+			<li><a href="#0"><span>Link</span></a></li>
+			<li><a href="#0"><span>Video</span></a></li>
+		</ul>
+
+		<span aria-hidden="true" class="stretchy-nav-bg"></span>
+	</nav>
+	-->
+</header>
+
+<!--
+https://codepen.io/nadiarasul/pen/mPvpJM
+https://codepen.io/tag/bus/
+
+-->
+
+<style type="text/css">
+	.data > table { clear: both; width: 80%; margin: 25px auto; border-top: 1px solid #000; }
+	.data > table tr td { padding: 10px 0px; }
+	.animation { width: 100%; padding-top: 250px; background: #F8EEB9; }
+	.flipsout { align-items: center; vertical-align: middle; text-align: center; width: 100%; margin: 0 auto; height: 100%; display: flex; }
+	.inner { margin: 0 auto; position: relative; width:100%; }
+	.bushold{ width:425px; margin:0 auto; position:relative;}
+	.shadow{ width:65%; height:20px; border-radius:100%; background:rgba(0,0,0,.2); margin:-10px 0 0 30px; z-index:999;}
+	.tyreF{ width:60px; height:60px; border-radius:100%; background:#1e2327; position:relative; animation:tyre 1s linear infinite; -webkit-animation:tyre 1s linear infinite; margin-left:50px}
+	.tyreF span{width:40px; height:40px; border-radius:100%; background:#aaaaaa; display:block; position:absolute; top:10px; left:10px;}
+	.tyreF span i{width:15px; height:15px; border-radius:100%; background:#1e2327; display:block; position:absolute; top:13px; left:13px;}
+	.tyreF:after{ border:solid 1px #fff; content:""; position:absolute;}
+	.tyreB{ position:absolute; bottom:10px; left:170px;}
+	.buspart{ width:60%; margin:0 auto; background:#fbbc05; height:100px; position:absolute; top: -100%; bottom: 0; left: -23%; right: 0; border-radius:20px 50px 5px 5px}
+	.buspart:after, .buspart:before{background: #F8EEB9 none repeat scroll 0 0; border-radius: 100%; content: ""; height: 59px; position: absolute; /*right: 42px;*/ right: 10px; top: 64px;width: 66px;}
+	.buspart:before{ left: 10px; }
+	.busgate{ height:40px; width:20px; background:#fff; position:absolute; right: 80px; top:45px; border-radius:5px;}
+	.window, .window:after, .window:before{ width: 50px; height:30px; border-radius:5px; background:#fff; margin:15px 0 0 15px; position:relative;}
+	.window:before, .window:after{ content:""; margin:0px; position:absolute; left: 75px; top:0px; }
+	.window:after{ left: 175px; border-radius:5px 50px 5px 5px;}
+	.road{ width:100%; background:rgba(0,0,0,.6); height: 65px; position:absolute;  top: 25%; border:solid 5px #fff; border-left:0px; border-right:0px; box-shadow:0px 7px 24px -1px rgba(0,0,0,.5) inset; }
+	.tree{margin:-230px auto; height:200px; animation:tree 3s linear infinite; -webkit-animation:tree 3s linear infinite; position:absolute;}
+	.tree span{ height:200px; width:10px; background:#fbbc05; display:inline-block; vertical-align:middle; margin: 0 90px;}
+	.tree span i, .tree span i:after, .tree span i:before{ height:50px; width:50px; background:#34a853; display:block; margin:-10px 0 0 -20px; border-radius:50%; position:relative;}
+	.tree span i:after, .tree span i:before{content:""; border-radius:40px 0; position:absolute; left:-12px; top:80px; transform:rotate(80deg); -webkit-transform:rotate(80deg);}
+	.tree span i:before{left:50px; top:90px; transform:rotate(-180deg); -webkit- transform:rotate(-180deg);}
+	.tree span.treetwo{ margin-top:50px; height:205px;}
+	@keyframes tyre{
+		0%{ transform:rotate(0deg); }
+		100%{ transform:rotate(360deg); }	
+	}
+	@keyframes tree{
+		0%{ right:0px; }
+		100%{ right:100%; opacity:0; }	
+	}
+</style>
+
+<main class="cd-main-content">
+	<div class="animation">
+		<div class="flipsout">
+			<div class="inner">
+				<div class="tree"><!--<span><i></i></span>--><span class="treetwo"><i></i></span><!--<span><i></i></span>--></div>
+				<div class="road"></div>
+				<div class="bushold">
+					<div class="buspart">
+						<div class="busgate"></div>
+						<div class="window"></div>
+					</div>
+					<div class="tyreF"><span><i></i></span></div>
+					<div class="tyreF tyreB"><span><i></i></span></div>
+					<div class="shadow"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="data"></div>
+</main>
+
+	
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+</body>
+</html>

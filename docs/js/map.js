@@ -180,7 +180,9 @@ $.ajax({
    url: "allBusStop.json",
    dataType: "json",
    success: function (data) {
+      console.log('we are there ....');
       getNearestBusStop(data.value);
+      console.log(markersData);
    }
 });
 

@@ -255,14 +255,14 @@ function getNearestBusStop(allBusStop) {
          $.each(response.Services, function( i, v ) {
 
             markersData.push(
-              [
+              {
                 lat: v.NextBus.Latitude,
                 lng: v.NextBus.Longitude,
                 name: v.ServiceNo,
                 address1: response.BusStopCode,
                 address2: "Praia da Barra",
                 postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
-              ]
+              }
             );
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');

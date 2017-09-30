@@ -133,7 +133,47 @@ var allBusStop = []
    ,nearestBusStop = []
    ,busArrival = []
    ,origin = [];
-   
+
+// *
+// * Add multiple markers
+// * 2013 - en.marnoto.com
+// *
+
+// necessary variables
+var map;
+var infoWindow;
+var markersData = [];
+
+// markersData variable stores the information necessary to each marker
+/*
+var markersData = [
+   {
+      lat: 40.6386333,
+      lng: -8.745,
+      name: "Camping Praia da Barra",
+      address1:"Rua Diogo Cão, 125",
+      address2: "Praia da Barra",
+      postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
+   },
+   {
+      lat: 40.59955,
+      lng: -8.7498167,
+      name: "Camping Costa Nova",
+      address1:"Quinta dos Patos, n.º 2",
+      address2: "Praia da Costa Nova",
+      postalCode: "3830-453 Gafanha da Encarnação" // don't insert comma in the last item of each marker
+   },
+   {
+      lat: 40.6247167,
+      lng: -8.7129167,
+      name: "Camping Gafanha da Nazaré",
+      address1:"Rua dos Balneários do Complexo Desportivo",
+      address2: "Gafanha da Nazaré",
+      postalCode: "3830-225 Gafanha da Nazaré" // don't insert comma in the last item of each marker
+   } // don't insert comma in the last item
+];
+*/
+
 var proxy = 'https://cors-anywhere.herokuapp.com/';
 
 $.ajax({
@@ -159,10 +199,10 @@ function getNearestBusStop(allBusStop) {
       var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
       var distance = calculateDistance(origin, databaseBusStop)
        array.push({
-           BusStopCode: busStopCode,
-           Distance: distance,
-         RoadName: allBusStop[index].RoadName,
-         Description: allBusStop[index].Description,
+          BusStopCode: busStopCode,
+          Distance: distance,
+          RoadName: allBusStop[index].RoadName,
+          Description: allBusStop[index].Description,
        });
    }
 
@@ -221,6 +261,18 @@ function getNearestBusStop(allBusStop) {
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
          $.each(response.Services, function( i, v ) {
+
+            markersData.push(
+              {
+                  lat: v.NextBus.Latitude,
+                  lng: v.NextBus.Longitude,
+                  name: "Camping Praia da Barra",
+                  address1:"Rua Diogo Cão, 125",
+                  address2: "Praia da Barra",
+                  postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
+               }
+            );
+
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
       });
@@ -234,53 +286,10 @@ function timeToMinute(arriveTime) {
    return ((minutes < 0) ? 0 : minutes);;
 }
 
-
-
-
-
-
-// *
-// * Add multiple markers
-// * 2013 - en.marnoto.com
-// *
-
-// necessary variables
-var map;
-var infoWindow;
-
-// markersData variable stores the information necessary to each marker
-var markersData = [
-   {
-      lat: 40.6386333,
-      lng: -8.745,
-      name: "Camping Praia da Barra",
-      address1:"Rua Diogo Cão, 125",
-      address2: "Praia da Barra",
-      postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
-   },
-   {
-      lat: 40.59955,
-      lng: -8.7498167,
-      name: "Camping Costa Nova",
-      address1:"Quinta dos Patos, n.º 2",
-      address2: "Praia da Costa Nova",
-      postalCode: "3830-453 Gafanha da Encarnação" // don't insert comma in the last item of each marker
-   },
-   {
-      lat: 40.6247167,
-      lng: -8.7129167,
-      name: "Camping Gafanha da Nazaré",
-      address1:"Rua dos Balneários do Complexo Desportivo",
-      address2: "Gafanha da Nazaré",
-      postalCode: "3830-225 Gafanha da Nazaré" // don't insert comma in the last item of each marker
-   } // don't insert comma in the last item
-];
-
-
 function initialize() {
    var mapOptions = {
       center: new google.maps.LatLng(40.601203,-8.668173),
-      zoom: 9,
+      zoom: 12,
       mapTypeId: 'roadmap',
    };
 

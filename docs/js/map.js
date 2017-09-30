@@ -223,7 +223,7 @@ function getNearestBusStop(allBusStop) {
 
          $.each(response.Services, function( i, v ) {
 
-            markersData.push([v.NextBus.Latitude, v.NextBus.Longitude, v.ServiceNo, response.BusStopCode]);
+            markersData.push(v);
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
@@ -299,13 +299,13 @@ function displayMarkers(){
    // this variable sets the map bounds according to markers position
    var bounds = new google.maps.LatLngBounds();
    
-   console.log(markersData[][0]);
+   console.log(markersData);
 
    // for loop traverses markersData array calling createMarker function for each marker 
    for (var i = 0; i < markersData.length; i++) {
 
-      console.log('lat: ' + markersData[i].lat);
-      console.log('lng: ' + markersData[i].lng);
+      //console.log('lat: ' + markersData[i].lat);
+      //console.log('lng: ' + markersData[i].lng);
 
       var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
       var name = markersData[i].name;

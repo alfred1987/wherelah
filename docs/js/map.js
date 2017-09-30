@@ -223,7 +223,6 @@ function getNearestBusStop(allBusStop) {
 
          $.each(response.Services, function( i, v ) {
 
-            /*
             markersData.push(
               {
                 lat: v.NextBus.Latitude,
@@ -234,7 +233,6 @@ function getNearestBusStop(allBusStop) {
                 postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
               }
             );
-            */
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
@@ -250,6 +248,7 @@ function timeToMinute(arriveTime) {
 }
 
 // markersData variable stores the information necessary to each marker
+/*
 markersData = [
    {
       lat: 40.6386333,
@@ -276,6 +275,7 @@ markersData = [
       postalCode: "3830-225 Gafanha da Nazaré" // don't insert comma in the last item of each marker
    } // don't insert comma in the last item
 ];
+*/
 
 function initialize() {
    var mapOptions = {

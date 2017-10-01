@@ -136,8 +136,6 @@ var allBusStop      = []
    ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
 var map;
-var infoWindow;
-var markersData = [];
 
 function getNearestBusStop(allBusStop) {
 
@@ -244,27 +242,24 @@ function getNearestBusStop(allBusStop) {
                   title: response.BusStopCode
                });
 
-              var windowContent = '<h3>' + value.RoadName + '</h3>' + '<p>' + value.Description + '</p>';
+              google.maps.event.addListener(marker, 'click', function() {
+            
 
-              var infobox = new InfoBox({
-                  content: infoWindow.setContent(windowContent),
-                  alignBottom: true,
-                  pixelOffset: new google.maps.Size(-160, -45)
-              });
+                // Creating the content to be inserted in the infowindow
+                var iwContent = '<div id="iw_container">' +
+                      '<div class="iw_title">' + value.RoadName + '</div>' +
+                   '<div class="iw_content">' + value.Description + '</div></div>';
+                
+                // including content to the Info Window.
+                infoWindow.setContent(iwContent);
 
-               google.maps.event.addListener(marker, 'click', function () {
-                    // Open this map's infobox
-                    infobox.open(map, marker);
-                    infobox.setContent(windowContent);
-                    map.panTo(marker.getPosition());
-                    infobox.show();
-                });
+                // opening the Info Window in the current map and at the current marker location.
+                infoWindow.open(map, marker);
 
-                google.maps.event.addListener(map, 'click', function () {
-                    infobox.setMap(null);
-                });
 
-                bounds.extend(marker.getPosition());
+             });
+
+                
             }
 
             

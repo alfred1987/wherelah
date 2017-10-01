@@ -209,6 +209,7 @@ function getNearestBusStop(allBusStop) {
       $.ajax(settings).done(function (response) {
 
 
+        DataMarker.push(response);
         
 
 
@@ -217,16 +218,6 @@ function getNearestBusStop(allBusStop) {
 
          $.each(response.Services, function( i, v ) {
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
-
-            console.log(i);
-
-            DataMarker.push(
-              {
-                lat: v.NextBus.Latitude,
-                lng: v.NextBus.Longitude,
-              }
-            );
-
          });
       });
    });

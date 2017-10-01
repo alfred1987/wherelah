@@ -217,13 +217,14 @@ function getNearestBusStop(allBusStop) {
 
       $.ajax(settings).done(function (response) {
 
-         console.log(response);
+        markersData.push(response);
+        console.log(response);
 
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
          $.each(response.Services, function( i, v ) {
 
-            markersData.push(v);
+            
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
@@ -276,7 +277,7 @@ $.ajax({
       getNearestBusStop(data.value);
 
       console.log(markersData);
-      
+
       /*
       function initialize() {
          var mapOptions = {

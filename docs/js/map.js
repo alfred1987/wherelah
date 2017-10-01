@@ -207,10 +207,9 @@ function getNearestBusStop(allBusStop) {
       }
 
       $.ajax(settings).done(function (response) {
-
-        setTimeout(function(){ 
+          console.log('pulling marker');
           DataMarker.push(response);
-        }, 5000);
+          console.log('pulled marker');
 
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
@@ -220,7 +219,7 @@ function getNearestBusStop(allBusStop) {
       });
    });
 
-   console.log(DataMarker);       
+          
 }
 
 function timeToMinute(arriveTime) {
@@ -236,7 +235,7 @@ $.ajax({
    success: function (data) {
       console.log('sucess');
       getNearestBusStop(data.value);
-
+      console.log(DataMarker);
 
 
 

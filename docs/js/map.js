@@ -239,9 +239,21 @@ function getNearestBusStop(allBusStop) {
               var marker = new google.maps.Marker({
                   map: map,
                   position: latlng,
-                  title: response.BusStopCode
+                  title: v.ServiceNo
                });
 
+              // Creating the content to be inserted in the infowindow
+                var iwContent = '<div id="iw_container">' +
+                      '<div class="iw_title">' + response.BusStopCode + ' , ' + value.RoadName + '</div>' +
+                   '<div class="iw_content">' + v.ServiceNo + ' , ' + value.Description + '</div></div>';
+                
+                // including content to the Info Window.
+                infoWindow.setContent(iwContent);
+
+                // opening the Info Window in the current map and at the current marker location.
+                infoWindow.open(map, marker);
+                
+              /*
               google.maps.event.addListener(marker, 'click', function() {
             
 
@@ -258,6 +270,7 @@ function getNearestBusStop(allBusStop) {
 
 
              });
+             */
 
                 
             }

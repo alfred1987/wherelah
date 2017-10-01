@@ -263,9 +263,6 @@ function initialize() {
    google.maps.event.addListener(map, 'click', function() {
       infoWindow.close();
    });
-
-   // Finally displayMarkers() function is called to begin the markers creation
-   displayMarkers();
 }
 
 $.ajax({

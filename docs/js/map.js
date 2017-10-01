@@ -208,11 +208,9 @@ function getNearestBusStop(allBusStop) {
 
       $.ajax(settings).done(function (response) {
 
-
-        DataMarker.push(response);
-        
-
-
+        setTimeout(function(){ 
+          DataMarker.push(response);
+        }, 5000);
 
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 

@@ -129,20 +129,11 @@ Date.prototype.format = function (mask, utc) {
    return dateFormat(this, mask, utc);
 };
 
-var allBusStop = []
-   ,nearestBusStop = []
-   ,busArrival = []
-   ,origin = [];
-
-// *
-// * Add multiple markers
-// * 2013 - en.marnoto.com
-// *
-
-// necessary variables
-var map;
-var infoWindow;
-var proxy = 'https://cors-anywhere.herokuapp.com/';
+var allBusStop      = []
+   ,nearestBusStop  = []
+   ,busArrival      = []
+   ,origin          = []
+   ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
 function getNearestBusStop(allBusStop) {
 
@@ -150,8 +141,7 @@ function getNearestBusStop(allBusStop) {
       ,BusStopCode = []
       ,Distance = []
       ,RoadName = []
-      ,Description = []
-      ,markersData = [];
+      ,Description = [];
 
    origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
 
@@ -220,96 +210,10 @@ function getNearestBusStop(allBusStop) {
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
          $.each(response.Services, function( i, v ) {
-
-            markersData.push({
-              lat: v.NextBus.Latitude,
-              lng: v.NextBus.Longitude,
-            });
-            
-
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
       });
-   }); 
-
-   function initialize() {
-       var mapOptions = {
-          center: new google.maps.LatLng(40.601203,-8.668173),
-          zoom: 12,
-          mapTypeId: 'roadmap',
-       };
-
-       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-       // a new Info Window is created
-       infoWindow = new google.maps.InfoWindow();
-
-       // Event that closes the Info Window with a click on the map
-       google.maps.event.addListener(map, 'click', function() {
-          infoWindow.close();
-       });
-
-       // Finally displayMarkers() function is called to begin the markers creation
-       displayMarkers();
-    }
-
-  function displayMarkers(){
-      console.log('hello');
-       // this variable sets the map bounds according to markers position
-       var bounds = new google.maps.LatLngBounds();
-
-       // for loop traverses markersData array calling createMarker function for each marker 
-       for (var i = 0; i < markersData.length; i++) {
-
-          console.log(i);
-
-          console.log(markersData[i].lat);
-          console.log(markersData[i].lng);
-          
-          var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
-
-
-          //var name = markersData[i].name;
-          //var address1 = markersData[i].address1;
-          //var address2 = markersData[i].address2;
-          //var postalCode = markersData[i].postalCode;
-
-          //createMarker(latlng, name, address1, address2, postalCode);
-
-          createMarker(latlng);
-
-          // marker position is added to bounds variable
-          bounds.extend(latlng);  
-       }
-
-       // Finally the bounds variable is used to set the map bounds
-       // with fitBounds() function
-       map.fitBounds(bounds);
-    }
-
-    function createMarker(latlng){
-         var marker = new google.maps.Marker({
-            map: map,
-            position: latlng
-         });
-
-         // This event expects a click on a marker
-         // When this event is fired the Info Window content is created
-         // and the Info Window is opened.
-         google.maps.event.addListener(marker, 'click', function() {
-            
-
-            
-
-            // opening the Info Window in the current map and at the current marker location.
-            infoWindow.open(map, marker);
-
-
-         });
-      }
-
-  google.maps.event.addDomListener(window, 'load', initialize);
-   console.log(markersData);      
+   });       
 }
 
 function timeToMinute(arriveTime) {
@@ -319,132 +223,11 @@ function timeToMinute(arriveTime) {
    return ((minutes < 0) ? 0 : minutes);;
 }
 
-// markersData variable stores the information necessary to each marker
-/*
-markersData = [
-   {
-      lat: 40.6386333,
-      lng: -8.745,
-      name: "Camping Praia da Barra",
-      address1:"Rua Diogo Cão, 125",
-      address2: "Praia da Barra",
-      postalCode: "3830-772 Gafanha da Nazaré" // don't insert comma in the last item of each marker
-   },
-   {
-      lat: 40.59955,
-      lng: -8.7498167,
-      name: "Camping Costa Nova",
-      address1:"Quinta dos Patos, n.º 2",
-      address2: "Praia da Costa Nova",
-      postalCode: "3830-453 Gafanha da Encarnação" // don't insert comma in the last item of each marker
-   },
-   {
-      lat: 40.6247167,
-      lng: -8.7129167,
-      name: "Camping Gafanha da Nazaré",
-      address1:"Rua dos Balneários do Complexo Desportivo",
-      address2: "Gafanha da Nazaré",
-      postalCode: "3830-225 Gafanha da Nazaré" // don't insert comma in the last item of each marker
-   } // don't insert comma in the last item
-];
-*/
-
 $.ajax({
    url: "allBusStop.json",
    dataType: "json",
    success: function (data) {
       console.log('sucess');
       getNearestBusStop(data.value);
-
-      
-
-      /*
-      function initialize() {
-         var mapOptions = {
-            center: new google.maps.LatLng(40.601203,-8.668173),
-            zoom: 12,
-            mapTypeId: 'roadmap',
-         };
-
-         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-         // a new Info Window is created
-         infoWindow = new google.maps.InfoWindow();
-
-         // Event that closes the Info Window with a click on the map
-         google.maps.event.addListener(map, 'click', function() {
-            infoWindow.close();
-         });
-
-         // Finally displayMarkers() function is called to begin the markers creation
-         displayMarkers();
-      }
-
-      // This function will iterate over markersData array
-      // creating markers with createMarker function
-      function displayMarkers(){
-        console.log('hello');
-         // this variable sets the map bounds according to markers position
-         var bounds = new google.maps.LatLngBounds();
-
-         // for loop traverses markersData array calling createMarker function for each marker 
-         for (var i = 0; i < markersData.length; i++) {
-
-            var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
-            var name = markersData[i].name;
-            var address1 = markersData[i].address1;
-            var address2 = markersData[i].address2;
-            var postalCode = markersData[i].postalCode;
-
-            createMarker(latlng, name, address1, address2, postalCode);
-
-            // marker position is added to bounds variable
-            bounds.extend(latlng);  
-         }
-
-         // Finally the bounds variable is used to set the map bounds
-         // with fitBounds() function
-         map.fitBounds(bounds);
-      }
-
-      // This function creates each marker and it sets their Info Window content
-      function createMarker(latlng, name, address1, address2, postalCode){
-         var marker = new google.maps.Marker({
-            map: map,
-            position: latlng,
-            title: name
-         });
-
-         // This event expects a click on a marker
-         // When this event is fired the Info Window content is created
-         // and the Info Window is opened.
-         google.maps.event.addListener(marker, 'click', function() {
-            
-
-            // Creating the content to be inserted in the infowindow
-            var iwContent = '<div id="iw_container">' +
-                  '<div class="iw_title">' + name + '</div>' +
-               '<div class="iw_content">' + address1 + '<br />' +
-               address2 + '<br />' +
-               postalCode + '</div></div>';
-            
-            // including content to the Info Window.
-            infoWindow.setContent(iwContent);
-
-            // opening the Info Window in the current map and at the current marker location.
-            infoWindow.open(map, marker);
-
-
-         });
-      }
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-      */
-
-
-
-
    }
 });
-
-

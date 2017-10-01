@@ -139,76 +139,73 @@ var allBusStop      = []
 
 function getNearestBusStop(allBusStop) {
 
-   var array = []
+  var array = []
       ,BusStopCode = []
       ,Distance = []
       ,RoadName = []
       ,Description = [];
 
-   origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
+  origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
 
-   for (var index in allBusStop) {     
-      var busStopCode = allBusStop[index].BusStopCode;
-      var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
-      var distance = calculateDistance(origin, databaseBusStop)
-       array.push({
-          BusStopCode: busStopCode,
-          Distance: distance,
-          RoadName: allBusStop[index].RoadName,
-          Description: allBusStop[index].Description,
-       });
-   }
+  for (var index in allBusStop) {     
+    var busStopCode = allBusStop[index].BusStopCode;
+    var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
+    var distance = calculateDistance(origin, databaseBusStop)
+    array.push({
+      BusStopCode: busStopCode,
+      Distance: distance,
+      RoadName: allBusStop[index].RoadName,
+      Description: allBusStop[index].Description,
+    });
+  }
 
-   function calculateDistance(p1, p2) {
-       var erdRadius = 6371;
+  function calculateDistance(p1, p2) {
+     var erdRadius = 6371;
 
-       var p1Longitude = p1.Longitude * (Math.PI / 180);
-       var p1Latitude = p1.Latitude * (Math.PI / 180);
-       var p2Longitude = p2.Longitude * (Math.PI / 180);
-       var p2Latitude = p2.Latitude * (Math.PI / 180);
+     var p1Longitude = p1.Longitude * (Math.PI / 180);
+     var p1Latitude = p1.Latitude * (Math.PI / 180);
+     var p2Longitude = p2.Longitude * (Math.PI / 180);
+     var p2Latitude = p2.Latitude * (Math.PI / 180);
 
-       var x0 = p1Longitude * erdRadius * Math.cos(p1Latitude);
-       var y0 = p1Latitude * erdRadius;
+     var x0 = p1Longitude * erdRadius * Math.cos(p1Latitude);
+     var y0 = p1Latitude * erdRadius;
 
-       var x1 = p2Longitude * erdRadius * Math.cos(p2Latitude);
-       var y1 = p2Latitude * erdRadius;
+     var x1 = p2Longitude * erdRadius * Math.cos(p2Latitude);
+     var y1 = p2Latitude * erdRadius;
 
-       var dx = x0 - x1;
-       var dy = y0 - y1;
+     var dx = x0 - x1;
+     var dy = y0 - y1;
 
-       return Math.sqrt((dx * dx) + (dy * dy));
-   }
+     return Math.sqrt((dx * dx) + (dy * dy));
+  }
 
-   array.sort(function (a, b) {
-       return a.Distance - b.Distance;
-   });
+  array.sort(function (a, b) {
+     return a.Distance - b.Distance;
+  });
 
-   for (var i = 0; i < 20; i++){
-      //collect bus stop number within 0.3 meter
-      if( array[i].Distance >= 0.3 || i>5 ){
-         break;
-      }
+  for (var i = 0; i < 20; i++){
+    //collect bus stop number within 0.3 meter
+    if( array[i].Distance >= 0.3 || i>5 ){
+       break;
+    }
 
-      nearestBusStop.push(array[i]);
-   };
+    nearestBusStop.push(array[i]);
+  };
 
-   $('.data').html('');
+  $('.data').html('');
 
-   var mapOptions = {
-      center: new google.maps.LatLng(1.3188,103.94),
-      zoom: 15,
-      mapTypeId: 'roadmap',
-   };
-   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  var mapOptions = {
+    center: new google.maps.LatLng(1.3188,103.94),
+    zoom: 15,
+    mapTypeId: 'roadmap',
+  };
 
-    var infoWindow = new google.maps.InfoWindow();
+  var map         = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  var infoWindow  = new google.maps.InfoWindow();
+  var bounds      = new google.maps.LatLngBounds();
 
-    var bounds = new google.maps.LatLngBounds();
+   $.each(nearestBusStop, function( index, value ) {    
 
-
-
-
-   $.each(nearestBusStop, function( index, value ) {        
       var settings = {
          "async": true,
          "crossDomain": true,
@@ -222,17 +219,15 @@ function getNearestBusStop(allBusStop) {
       }
 
       $.ajax(settings).done(function (response) {
+
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
          
-
          $.each(response.Services, function( i, v ) {
 
             if( (v.NextBus.Latitude == 0) && (v.NextBus.Longitude == 0) ) {
               //...
             } else {
-
-              console.log(response);
 
               var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
 
@@ -242,49 +237,23 @@ function getNearestBusStop(allBusStop) {
                   title: v.ServiceNo
                });
 
-              // Creating the content to be inserted in the infowindow
-                var iwContent = '<div id="iw_container">' +
-                      '<div class="iw_title">' + response.BusStopCode + ' , ' + value.RoadName + '</div>' +
-                   '<div class="iw_content">' + v.ServiceNo + ' , ' + value.Description + '</div></div>';
-                
-                // including content to the Info Window.
-                infoWindow.setContent(iwContent);
-
-                // opening the Info Window in the current map and at the current marker location.
-                infoWindow.open(map, marker);
-                
-              /*
               google.maps.event.addListener(marker, 'click', function() {
-            
-
                 // Creating the content to be inserted in the infowindow
                 var iwContent = '<div id="iw_container">' +
-                      '<div class="iw_title">' + response.BusStopCode + ' , ' + value.RoadName + '</div>' +
-                   '<div class="iw_content">' + v.ServiceNo + ' , ' + value.Description + '</div></div>';
+                      '<div class="iw_title">Bus no: ' + v.ServiceNo + '</div>' +
+                   '<div class="iw_content">Lat: ' +  v.NextBus.Latitude + ', Lng: ' + v.NextBus.Longitude + '</div></div>';
                 
                 // including content to the Info Window.
                 infoWindow.setContent(iwContent);
 
                 // opening the Info Window in the current map and at the current marker location.
                 infoWindow.open(map, marker);
+               });
 
-
-             });
-             */
-
-                
             }
-
-            
-
-
-             
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
-
-         
-
       });
    });
 }

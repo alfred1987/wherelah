@@ -151,7 +151,7 @@ function getNearestBusStop(allBusStop) {
       ,Distance = []
       ,RoadName = []
       ,Description = []
-      ,Markers = [];
+      ,markersData = [];
 
    origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
 
@@ -221,7 +221,7 @@ function getNearestBusStop(allBusStop) {
 
          $.each(response.Services, function( i, v ) {
 
-            Markers.push({
+            markersData.push({
               lat: v.NextBus.Latitude,
               lng: v.NextBus.Longitude,
             });
@@ -302,7 +302,7 @@ function getNearestBusStop(allBusStop) {
       }
 
   google.maps.event.addDomListener(window, 'load', initialize);
-   //console.log(Markers);      
+   console.log(markersData);      
 }
 
 function timeToMinute(arriveTime) {

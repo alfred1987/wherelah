@@ -135,7 +135,7 @@ var allBusStop      = []
    ,origin          = []
    ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
-var map;
+
 
 function getNearestBusStop(allBusStop) {
 
@@ -194,14 +194,12 @@ function getNearestBusStop(allBusStop) {
 
    $('.data').html('');
 
-   var start_point = new google.maps.LatLng(1.3188777000000003, 103.9438054);
-
-    // Creating a new map
-    var map = new google.maps.Map(document.getElementById("map-canvas"), {
-        center: start_point,
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+   var mapOptions = {
+      center: new google.maps.LatLng(1.3188,103.94),
+      zoom: 15,
+      mapTypeId: 'roadmap',
+   };
+   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
     var infoWindow = new google.maps.InfoWindow();
 
@@ -234,6 +232,8 @@ function getNearestBusStop(allBusStop) {
               //...
             } else {
 
+              console.log(response);
+              
               var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
 
               var marker = new google.maps.Marker({
@@ -274,9 +274,6 @@ function getNearestBusStop(allBusStop) {
 
       });
    });
-
-    map.setCenter(start_point);
-    map.fitBounds(bounds);
 }
 
 function timeToMinute(arriveTime) {

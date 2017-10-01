@@ -196,7 +196,7 @@ function getNearestBusStop(allBusStop) {
 
    $('.data').html('');
 
-   var bounds = new google.maps.LatLngBounds();
+   
 
    $.each(nearestBusStop, function( index, value ) {        
       var settings = {
@@ -216,16 +216,17 @@ function getNearestBusStop(allBusStop) {
 
          $.each(response.Services, function( i, v ) {
 
+            var bounds = new google.maps.LatLngBounds();
             var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
             
             console.log(latlng);
-            
+
             var marker = new google.maps.Marker({
                 map: map,
                 position: latlng
              });
 
-            console.log(marker);
+            console.log(v.NextBus.Latitude + ' , ' +  v.NextBus.Longitude);
 
              // This event expects a click on a marker
              // When this event is fired the Info Window content is created
@@ -236,14 +237,14 @@ function getNearestBusStop(allBusStop) {
              });
 
              bounds.extend(latlng);
-             
+             map.fitBounds(bounds);
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
       });
    });
 
-   map.fitBounds(bounds);         
+            
 }
 
 function timeToMinute(arriveTime) {

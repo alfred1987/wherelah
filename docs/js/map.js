@@ -133,6 +133,7 @@ var allBusStop      = []
    ,nearestBusStop  = []
    ,busArrival      = []
    ,origin          = []
+   ,DataMarker      = []
    ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
 function getNearestBusStop(allBusStop) {
@@ -141,8 +142,7 @@ function getNearestBusStop(allBusStop) {
       ,BusStopCode = []
       ,Distance = []
       ,RoadName = []
-      ,Description = []
-      ,DataMarker = [];
+      ,Description = [];
 
    origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
 

@@ -220,7 +220,7 @@ function getNearestBusStop(allBusStop) {
 
             console.log(i);
 
-            DataMarker[i].push(
+            DataMarker.push(
               {
                 lat: v.NextBus.Latitude,
                 lng: v.NextBus.Longitude,

@@ -229,7 +229,9 @@ function getNearestBusStop(allBusStop) {
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
       });
-   });       
+   }); 
+
+   console.log(markersData);      
 }
 
 function timeToMinute(arriveTime) {
@@ -276,7 +278,7 @@ $.ajax({
       console.log('sucess');
       getNearestBusStop(data.value);
 
-      console.log(markersData);
+      
 
       /*
       function initialize() {

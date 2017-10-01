@@ -141,7 +141,8 @@ function getNearestBusStop(allBusStop) {
       ,BusStopCode = []
       ,Distance = []
       ,RoadName = []
-      ,Description = [];
+      ,Description = []
+      ,DataMarker = [];
 
    origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
 
@@ -207,13 +208,29 @@ function getNearestBusStop(allBusStop) {
 
       $.ajax(settings).done(function (response) {
 
+
+        
+
+
+
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
          $.each(response.Services, function( i, v ) {
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
+
+
+            DataMarker.push(
+              {
+                lat: v.NextBus.Latitude,
+                lng: v.NextBus.Longitude,
+              }
+            );
+
          });
       });
-   });       
+   });
+
+   localStorage.setItem('myJavaScriptObject', JSON.stringify(DataMarker));       
 }
 
 function timeToMinute(arriveTime) {
@@ -229,5 +246,10 @@ $.ajax({
    success: function (data) {
       console.log('sucess');
       getNearestBusStop(data.value);
+
+      var obj = JSON.parse(localStorage.getItem('myJavaScriptObject'));
+      console.log(obj);
+
+
    }
 });

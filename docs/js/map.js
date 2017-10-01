@@ -261,7 +261,14 @@ function getNearestBusStop(allBusStop) {
        // for loop traverses markersData array calling createMarker function for each marker 
        for (var i = 0; i < markersData.length; i++) {
 
+          console.log(i);
+
+          console.log(markersData[i].lat);
+          console.log(markersData[i].lng);
+          
           var latlng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
+
+
           //var name = markersData[i].name;
           //var address1 = markersData[i].address1;
           //var address2 = markersData[i].address2;

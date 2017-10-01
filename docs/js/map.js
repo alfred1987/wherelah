@@ -218,10 +218,14 @@ function getNearestBusStop(allBusStop) {
 
             var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
             
+            console.log(latlng);
+            
             var marker = new google.maps.Marker({
                 map: map,
                 position: latlng
              });
+
+            console.log(marker);
 
              // This event expects a click on a marker
              // When this event is fired the Info Window content is created
@@ -232,12 +236,14 @@ function getNearestBusStop(allBusStop) {
              });
 
              bounds.extend(latlng);
-             map.fitBounds(bounds);
+             
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
       });
-   });         
+   });
+
+   map.fitBounds(bounds);         
 }
 
 function timeToMinute(arriveTime) {

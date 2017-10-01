@@ -16,34 +16,6 @@ if( $('.cd-stretchy-nav').length > 0 ) {
    });
 }
 
-function initialize() {
-   var mapOptions = {
-      center: new google.maps.LatLng(40.601203,-8.668173),
-      zoom: 12,
-      mapTypeId: 'roadmap',
-   };
-
-   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-   // a new Info Window is created
-   infoWindow = new google.maps.InfoWindow();
-
-   // Event that closes the Info Window with a click on the map
-   google.maps.event.addListener(map, 'click', function() {
-      infoWindow.close();
-   });
-}
-
-$.ajax({
-   url: "allBusStop.json",
-   dataType: "json",
-   success: function (data) {
-      console.log('sucess');
-      getNearestBusStop(data.value);
-      google.maps.event.addDomListener(window, 'load', initialize);
-   }
-});
-
 var dateFormat = function () {
    var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
    timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
@@ -224,8 +196,21 @@ function getNearestBusStop(allBusStop) {
 
    $('.data').html('');
 
-   
-   var bounds = new google.maps.LatLngBounds();
+   var start_point = new google.maps.LatLng(0, 0);
+
+    // Creating a new map
+    var map = new google.maps.Map(document.getElementById("map-canvas"), {
+        center: start_point,
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infoWindow = new google.maps.InfoWindow();
+
+    var bounds = new google.maps.LatLngBounds();
+
+
+
 
    $.each(nearestBusStop, function( index, value ) {        
       var settings = {
@@ -250,7 +235,7 @@ function getNearestBusStop(allBusStop) {
 
             var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
             
-            console.log(latlng);
+            //console.log(latlng);
 
             var marker = new google.maps.Marker({
                 map: map,
@@ -267,7 +252,7 @@ function getNearestBusStop(allBusStop) {
                 infoWindow.open(map, marker);
              });
 
-             bounds.extend(latlng);
+
              
 
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
@@ -278,7 +263,7 @@ function getNearestBusStop(allBusStop) {
       });
    });
 
-  map.fitBounds(bounds);          
+       
 }
 
 function timeToMinute(arriveTime) {
@@ -288,5 +273,11 @@ function timeToMinute(arriveTime) {
    return ((minutes < 0) ? 0 : minutes);;
 }
 
-
-
+$.ajax({
+   url: "allBusStop.json",
+   dataType: "json",
+   success: function (data) {
+      console.log('sucess');
+      getNearestBusStop(data.value);
+   }
+});

@@ -133,7 +133,6 @@ var allBusStop      = []
    ,nearestBusStop  = []
    ,busArrival      = []
    ,origin          = []
-   ,DataMarker      = []
    ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
 function getNearestBusStop(allBusStop) {
@@ -193,6 +192,8 @@ function getNearestBusStop(allBusStop) {
 
    $('.data').html('');
 
+   var bounds = new google.maps.LatLngBounds();
+
    $.each(nearestBusStop, function( index, value ) {        
       var settings = {
          "async": true,
@@ -207,19 +208,32 @@ function getNearestBusStop(allBusStop) {
       }
 
       $.ajax(settings).done(function (response) {
-          console.log('pulling marker');
-          DataMarker.push(response);
-          console.log('pulled marker');
-
          $('.data').append('<table class="stop-' + response.BusStopCode + '" cellspacing="0" cellspacing="0" border="0" align="center"><tr><td>Bus Stop: ' + response.BusStopCode + '<br />Road name: ' + value.RoadName + '<br />Description: ' + value.Description + '</td></tr><tr><td class="estimate"></td></tr></table>');
 
          $.each(response.Services, function( i, v ) {
+
+            var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
+            
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng
+             });
+
+             // This event expects a click on a marker
+             // When this event is fired the Info Window content is created
+             // and the Info Window is opened.
+             google.maps.event.addListener(marker, 'click', function() {
+                // opening the Info Window in the current map and at the current marker location.
+                infoWindow.open(map, marker);
+             });
+
+             bounds.extend(latlng);
+             map.fitBounds(bounds);
+
             $('.stop-' + response.BusStopCode + ' .estimate' ).append('<table cellspacing="0" cellpadding="0" border="0" align="center"><tr><td>Bus No: ' + v.ServiceNo + ' is coming in ' + timeToMinute(v.NextBus.EstimatedArrival) + ' mins</td></tr></table>');
          });
       });
-   });
-
-          
+   });         
 }
 
 function timeToMinute(arriveTime) {
@@ -229,15 +243,33 @@ function timeToMinute(arriveTime) {
    return ((minutes < 0) ? 0 : minutes);;
 }
 
+function initialize() {
+   var mapOptions = {
+      center: new google.maps.LatLng(40.601203,-8.668173),
+      zoom: 12,
+      mapTypeId: 'roadmap',
+   };
+
+   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+   // a new Info Window is created
+   infoWindow = new google.maps.InfoWindow();
+
+   // Event that closes the Info Window with a click on the map
+   google.maps.event.addListener(map, 'click', function() {
+      infoWindow.close();
+   });
+
+   // Finally displayMarkers() function is called to begin the markers creation
+   displayMarkers();
+}
+
 $.ajax({
    url: "allBusStop.json",
    dataType: "json",
    success: function (data) {
       console.log('sucess');
       getNearestBusStop(data.value);
-      console.log(DataMarker);
-
-
-
+      google.maps.event.addDomListener(window, 'load', initialize);
    }
 });

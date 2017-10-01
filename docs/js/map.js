@@ -231,7 +231,7 @@ function getNearestBusStop(allBusStop) {
       });
    }); 
 
-   console.log(array);      
+   console.log(nearestBusStop);      
 }
 
 function timeToMinute(arriveTime) {

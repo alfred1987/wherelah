@@ -135,6 +135,10 @@ var allBusStop      = []
    ,origin          = []
    ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
+var map;
+var infoWindow;
+var markersData = [];
+
 function getNearestBusStop(allBusStop) {
 
    var array = []

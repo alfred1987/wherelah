@@ -246,7 +246,7 @@ function getNearestBusStop(allBusStop) {
 
               var windowContent = '<h3>' + value.RoadName + '</h3>' + '<p>' + value.Description + '</p>';
 
-              infobox = new InfoBox({
+              var infobox = new InfoBox({
                   content: infoWindow.setContent(windowContent),
                   alignBottom: true,
                   pixelOffset: new google.maps.Size(-160, -45)

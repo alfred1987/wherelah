@@ -196,12 +196,12 @@ function getNearestBusStop(allBusStop) {
 
    $('.data').html('');
 
-   var start_point = new google.maps.LatLng(0, 0);
+   var start_point = new google.maps.LatLng(1.3188777000000003, 103.9438054);
 
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map-canvas"), {
         center: start_point,
-        zoom: 6,
+        zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -241,18 +241,30 @@ function getNearestBusStop(allBusStop) {
               var marker = new google.maps.Marker({
                   map: map,
                   position: latlng,
-                  title: v.ServiceNo
+                  title: response.BusStopCode
                });
 
-              console.log(v.NextBus.Latitude + ' , ' +  v.NextBus.Longitude);
+              var windowContent = '<h3>' + value.RoadName + '</h3>' + '<p>' + value.Description + '</p>';
 
-               // This event expects a click on a marker
-               // When this event is fired the Info Window content is created
-               // and the Info Window is opened.
-               google.maps.event.addListener(marker, 'click', function() {
-                  // opening the Info Window in the current map and at the current marker location.
-                  infoWindow.open(map, marker);
-               });
+              infobox = new InfoBox({
+                  content: infoWindow.setContent(windowContent),
+                  alignBottom: true,
+                  pixelOffset: new google.maps.Size(-160, -45)
+              });
+
+               google.maps.event.addListener(marker, 'click', function () {
+                    // Open this map's infobox
+                    infobox.open(map, marker);
+                    infobox.setContent(windowContent);
+                    map.panTo(marker.getPosition());
+                    infobox.show();
+                });
+
+                google.maps.event.addListener(map, 'click', function () {
+                    infobox.setMap(null);
+                });
+
+                bounds.extend(marker.getPosition());
             }
 
             

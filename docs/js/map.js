@@ -233,7 +233,7 @@ function getNearestBusStop(allBusStop) {
             } else {
 
               console.log(response);
-              
+
               var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
 
               var marker = new google.maps.Marker({
@@ -247,8 +247,8 @@ function getNearestBusStop(allBusStop) {
 
                 // Creating the content to be inserted in the infowindow
                 var iwContent = '<div id="iw_container">' +
-                      '<div class="iw_title">' + value.RoadName + '</div>' +
-                   '<div class="iw_content">' + value.Description + '</div></div>';
+                      '<div class="iw_title">' + response.BusStopCode + ' , ' + value.RoadName + '</div>' +
+                   '<div class="iw_content">' + v.ServiceNo + ' , ' + value.Description + '</div></div>';
                 
                 // including content to the Info Window.
                 infoWindow.setContent(iwContent);

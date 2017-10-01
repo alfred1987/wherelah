@@ -232,25 +232,30 @@ function getNearestBusStop(allBusStop) {
 
          $.each(response.Services, function( i, v ) {
 
+            if( (v.NextBus.Latitude == 0) && (v.NextBus.Longitude == 0) ) {
+              //...
+            } else {
 
-            var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
+              var latlng = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
+
+              var marker = new google.maps.Marker({
+                  map: map,
+                  position: latlng,
+                  title: v.ServiceNo
+               });
+
+              console.log(v.NextBus.Latitude + ' , ' +  v.NextBus.Longitude);
+
+               // This event expects a click on a marker
+               // When this event is fired the Info Window content is created
+               // and the Info Window is opened.
+               google.maps.event.addListener(marker, 'click', function() {
+                  // opening the Info Window in the current map and at the current marker location.
+                  infoWindow.open(map, marker);
+               });
+            }
+
             
-            //console.log(latlng);
-
-            var marker = new google.maps.Marker({
-                map: map,
-                position: latlng
-             });
-
-            console.log(v.NextBus.Latitude + ' , ' +  v.NextBus.Longitude);
-
-             // This event expects a click on a marker
-             // When this event is fired the Info Window content is created
-             // and the Info Window is opened.
-             google.maps.event.addListener(marker, 'click', function() {
-                // opening the Info Window in the current map and at the current marker location.
-                infoWindow.open(map, marker);
-             });
 
 
              
@@ -263,7 +268,8 @@ function getNearestBusStop(allBusStop) {
       });
    });
 
-       
+    map.setCenter(start_point);
+    map.fitBounds(bounds);
 }
 
 function timeToMinute(arriveTime) {

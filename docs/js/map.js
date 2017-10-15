@@ -240,8 +240,8 @@ function getNearestBusStop(allBusStop) {
                 var latlng    = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
                 
                 var image = {
-                  url: 'img/bus.png',
-                  size: new google.maps.Size(32, 32)
+                  url: 'img/bus20.png',
+                  size: new google.maps.Size(20, 20)
                 };
 
                 var marker    = new google.maps.Marker({

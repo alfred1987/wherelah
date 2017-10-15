@@ -253,10 +253,14 @@ function getNearestBusStop(allBusStop) {
 
                 google.maps.event.addListener(marker, 'click', function() {
                   // Creating the content to be inserted in the infowindow
+                  /*
                   var iwContent = '<div id="iw_container">' +
                         '<div class="iw_title">Bus no: ' + v.ServiceNo + '</div>' +
                      '<div class="iw_content">Lat: ' +  v.NextBus.Latitude + ', Lng: ' + v.NextBus.Longitude + '</div></div>';
+                  */
                   
+                  var iwContent = '<div id="iw_container"><div class="iw_title">' + v.ServiceNo + '</div></div>';
+
                   // including content to the Info Window.
                   infoWindow.setContent(iwContent);
 

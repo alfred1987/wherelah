@@ -152,18 +152,9 @@ function getNearestBusStop(allBusStop) {
   function success(pos) {
     var crd = pos.coords;
     origin = {"Longitude":crd.longitude,"Latitude":crd.latitude};
-  };
+    console.log(origin);
 
-  function error(err) {
-    alert('ERROR(' + err.code + '): ' + err.message);
-  };
-
-  navigator.geolocation.getCurrentPosition(success, error, options);
-
-  console.log(origin);
-  //origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
-
-  for (var index in allBusStop) {     
+    for (var index in allBusStop) {     
     var busStopCode = allBusStop[index].BusStopCode;
     var databaseBusStop = {"Longitude": allBusStop[index].Longitude,"Latitude":allBusStop[index].Latitude};
     var distance = calculateDistance(origin, databaseBusStop)
@@ -272,6 +263,19 @@ function getNearestBusStop(allBusStop) {
          });
       });
    });
+    
+  };
+
+  function error(err) {
+    alert('ERROR(' + err.code + '): ' + err.message);
+  };
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+
+  //console.log(origin);
+  //origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
+
+  
 }
 
 function timeToMinute(arriveTime) {

@@ -135,8 +135,6 @@ var allBusStop      = []
    ,origin          = []
    ,proxy           = 'https://cors-anywhere.herokuapp.com/';
 
-
-
 function getNearestBusStop(allBusStop) {
 
   var array = []
@@ -145,7 +143,25 @@ function getNearestBusStop(allBusStop) {
       ,RoadName = []
       ,Description = [];
 
-  origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
+  function success(pos) {
+    var crd = pos.coords;
+    origin = {"Longitude":crd.longitude,"Latitude":crd.latitude};
+  };
+
+  function error(err) {
+    alert('ERROR(' + err.code + '): ' + err.message);
+  };
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+
+  console.log(origin);
+  //origin = {"Longitude":103.9438054,"Latitude":1.3188777000000003};
 
   for (var index in allBusStop) {     
     var busStopCode = allBusStop[index].BusStopCode;

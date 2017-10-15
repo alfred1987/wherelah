@@ -238,11 +238,10 @@ function getNearestBusStop(allBusStop) {
               } else {
 
                 var latlng    = new google.maps.LatLng(v.NextBus.Latitude, v.NextBus.Longitude);
-                var iconBase  = 'https://maps.google.com/mapfiles/kml/shapes/';
                 
                 var image = {
-                  url: iconBase + 'bus.png',
-                  size: new google.maps.Size(20, 32)
+                  url: 'img/bus.png',
+                  size: new google.maps.Size(32, 32)
                 };
 
                 var marker    = new google.maps.Marker({
